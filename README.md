@@ -1,4 +1,4 @@
-# Backend - Backend repo for invoices, feedbacks and cardeal
+# Backend - Backend repo for invoices, feedbacks and hellocar
 
 This is the backend repo for all the projects on my portfolio.
 
