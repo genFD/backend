@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 export function setupSwagger(app: INestApplication): void {
 	const documentBuilder = new DocumentBuilder()
 		.setTitle('API')
+		.setVersion('1.0')
 		.setDescription(
 			`### REST
 
