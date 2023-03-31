@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { User_Invoice } from '@prisma/client';
 
-export class Users implements User_Invoice {
+export class User implements User_Invoice {
 	@ApiProperty()
 	admin: boolean;
 	@ApiProperty()
