@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '~prisma/prisma.service';
 
 @Injectable()
 export class UserService {
-	constructor(private readonly prisma: PrismaService) {}
+	constructor(private prisma: PrismaService) {}
 
 	create(email: string, password: string) {
 		return this.prisma.user_Invoice.create({ data: { email, password } });
@@ -15,15 +15,27 @@ export class UserService {
 		return this.prisma.user_Invoice.findMany();
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} user`;
+	async findOne(id: string) {
+		const user = await this.prisma.user_Invoice.findUnique({
+			where: {
+				id,
+			},
+		});
+		if (!id) return null;
+		if (!user) throw new NotFoundException(`Cannot find user with id ${id}`);
+		return user;
 	}
 
-	update(id: number, updateUserDto: UpdateUserDto) {
-		return `This action updates a #${id} user`;
+	update(id: string, data: UpdateUserDto) {
+		return this.prisma.user_Invoice.update({
+			where: { id },
+			data,
+		});
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} user`;
+	remove(id: string) {
+		return this.prisma.user_Invoice.delete({
+			where: { id },
+		});
 	}
 }

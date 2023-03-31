@@ -22,7 +22,6 @@ export class UserController {
 	create(@Body() body: CreateUserDto) {
 		return this.userService.create(body.email, body.password);
 	}
-
 	@Get()
 	@ApiOkResponse({ type: [User] })
 	findAll() {
@@ -30,17 +29,20 @@ export class UserController {
 	}
 
 	@Get(':id')
+	@ApiOkResponse({ type: User })
 	findOne(@Param('id') id: string) {
-		return this.userService.findOne(+id);
+		return this.userService.findOne(id);
 	}
 
 	@Patch(':id')
-	update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-		return this.userService.update(+id, updateUserDto);
+	@ApiOkResponse({ type: User })
+	update(@Param('id') id: string, @Body() data: UpdateUserDto) {
+		return this.userService.update(id, data);
 	}
 
 	@Delete(':id')
+	@ApiOkResponse({ type: User })
 	remove(@Param('id') id: string) {
-		return this.userService.remove(+id);
+		return this.userService.remove(id);
 	}
 }
