@@ -7,7 +7,7 @@ import {
 	Param,
 	Delete,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -19,6 +19,9 @@ export class UserController {
 	constructor(private readonly userService: UserService) {}
 
 	@Post()
+	@ApiCreatedResponse({
+		description: 'A user has been successfully created.',
+	})
 	create(@Body() body: CreateUserDto) {
 		return this.userService.create(body.email, body.password);
 	}
