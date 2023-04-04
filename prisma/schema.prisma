@@ -6,34 +6,63 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DB_URL_DEV")
+  // url      = env("DATABASE_URL") // prod
 }
 
-// #### HELLO CAR
+//|| ############### HELLOCAR - ONLINE CAR RENTAL ############# ||
 
 model User_Cardeal {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  password String
-  admin    Boolean @default(false)
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  image     String?
+  admin     Boolean  @default(false)
+  reports   Report[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-// #### INVOICES
+model Report {
+  id           String        @id @default(uuid())
+  price        Int
+  make         String
+  model        String
+  color        String
+  transmission String
+  fuel_type    String
+  year         Int
+  mileage      Int
+  approved     Boolean       @default(false)
+  author       User_Cardeal? @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authorId     String?
+  createdAt    DateTime      @default(now())
+}
+
+//|| ########## INVOICE - INVOICE MANAGEMENT SYSTEM ################ ||
 
 model User_Invoice {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  password String
-  admin    Boolean @default(false)
+  id        String    @id @default(uuid())
+  image     String?
+  name      String
+  username  String
+  email     String    @unique
+  password  String
+  admin     Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  invoices  Invoice[]
 }
 
 model Invoice {
-  id           String   @id @default(uuid())
-  createdAt    DateTime @default(now())
-  paymentDue   DateTime @default(now())
+  id           String       @id @default(uuid())
+  createdAt    DateTime     @default(now())
+  paymentDue   DateTime     @default(now())
   description  String
   paymentTerms Int
-  client       Client   @relation(fields: [client_id], references: [id])
-  client_id    String   @unique
+  user         User_Invoice @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id      String
+  client       Client       @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  client_id    String       @unique
   status       String
   orders       Orders[]
 }
@@ -48,19 +77,19 @@ model Item {
 model Orders {
   id         String  @id @default(uuid())
   quantity   Int
-  invoice    Invoice @relation(fields: [invoice_id], references: [id])
+  invoice    Invoice @relation(fields: [invoice_id], references: [id], onDelete: Cascade)
   invoice_id String
   item       Item    @relation(fields: [item_id], references: [id])
   item_id    String
 }
 
 model Client {
-  id        String    @id @default(uuid())
-  name      String
-  email     String    @unique
-  invoice   Invoice[]
-  addressId String?   @unique
-  Address   Address?  @relation(fields: [addressId], references: [id])
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  invoice    Invoice[]
+  address_id String?   @unique
+  address    Address?  @relation(fields: [address_id], references: [id])
 }
 
 model Address {
@@ -72,37 +101,66 @@ model Address {
   client   Client?
 }
 
-// #### FEEDBACKS
+//|| ########### FEEDBACKS - FEEDBACKS MANAGEMENT ############### ||
 
 model User_Feedback {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  password String
-  admin    Boolean @default(false)
+  id        String     @id @default(uuid())
+  image     String?
+  name      String
+  username  String
+  email     String     @unique
+  password  String
+  admin     Boolean    @default(false)
+  Comment   Comment[]
+  Feedback  Feedback[]
+  Upvote    Upvote?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
-// CLIENT
-// id
-// name
-// email
-// address : address.id
+model Feedback {
+  id          String            @id @default(uuid())
+  title       String
+  description String
+  category    Category_Feedback @relation(fields: [category_id], references: [id])
+  category_id String
+  status      Status_Feedback   @relation(fields: [status_id], references: [id])
+  status_id   String
+  user        User_Feedback     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id     String
+  Comment     Comment[]
+  Upvote      Upvote?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
 
-// ADDRESS
-// id
-// "street": "19 Union Terrace",
-// "city": "London",
-// "postCode": "E1 3EZ",
-// "country": "United Kingdom"
+model Category_Feedback {
+  id       String     @id @default(uuid())
+  name     String
+  Feedback Feedback[]
+}
 
-// ITEM
-// id
-// "name": "Brand Guidelines",
-// "price": 1800.90,
+model Status_Feedback {
+  id       String     @id @default(uuid())
+  name     String
+  Feedback Feedback[]
+}
 
-// CartItem
-// [
-// id
-// item_id : Item.id
-// quantity : 3
-// subtotal : item.price * quantity
-// ]
+model Comment {
+  id          String        @id @default(uuid())
+  content     String
+  user        User_Feedback @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id     String
+  feedback    Feedback      @relation(fields: [feedback_id], references: [id], onDelete: Cascade)
+  feedback_id String
+  created_at  DateTime      @default(now())
+}
+
+model Upvote {
+  id          String        @id @default(uuid())
+  user        User_Feedback @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id     String        @unique
+  feedback    Feedback      @relation(fields: [feedback_id], references: [id], onDelete: Cascade)
+  feedback_id String        @unique
+  createdAt   DateTime      @default(now())
+}

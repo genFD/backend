@@ -15,20 +15,19 @@ async function main() {
 	// JOIN public."Item" ON public."Item".id = public."Orders".item_id
 	// `;
 	// console.log(result);
-	const invoice1 = 'a302b211-ef04-4491-b780-f12a9ac8e616';
-	const result = await prisma.$queryRaw`
-	SELECT SUM(subtotal) as grand_total
-	FROM (
-	SELECT subtotal FROM (
-	SELECT invoice_id, name, quantity, price, (quantity * price) AS subtotal 
-	FROM public."Invoice"
-	JOIN public."Orders" ON public."Orders".invoice_id = public."Invoice".id
-	JOIN public."Item" ON public."Item".id = public."Orders".item_id) AS CART
-	WHERE invoice_id = ${invoice1} 
-) AS total
-	`;
-	console.log(result);
-
+	// 	const invoice1 = 'a302b211-ef04-4491-b780-f12a9ac8e616';
+	// 	const result = await prisma.$queryRaw`
+	// 	SELECT SUM(subtotal) as grand_total
+	// 	FROM (
+	// 	SELECT subtotal FROM (
+	// 	SELECT invoice_id, name, quantity, price, (quantity * price) AS subtotal
+	// 	FROM public."Invoice"
+	// 	JOIN public."Orders" ON public."Orders".invoice_id = public."Invoice".id
+	// 	JOIN public."Item" ON public."Item".id = public."Orders".item_id) AS CART
+	// 	WHERE invoice_id = ${invoice1}
+	// ) AS total
+	// 	`;
+	// console.log(result);
 	// await prisma.item.createMany({
 	// 	data: [
 	// 		{ name: 'Brand Guidelines', price: 1800.9 },
@@ -117,12 +116,83 @@ async function main() {
 	// 		{ email: 'gabriel@email.invoice', password: 'password' },
 	// 	],
 	// });
-	// await prisma.user_Feedback.createMany({
-	// 	data: [
-	// 		{ email: 'saliba@email.feedback', password: 'password' },
-	// 		{ email: 'gabriel@email.feedback', password: 'password' },
-	// 	],
-	// });
+
+	await prisma.user_Feedback.createMany({
+		data: [
+			{
+				name: 'Zena Kelley',
+				username: 'velvetround',
+				email: 'zenakelley@email.feedback',
+				password: 'password',
+			},
+			{
+				name: 'Suzanne Chang',
+				username: 'upbeat1811',
+				email: 'suzannechang@email.feedback',
+				password: 'password',
+			},
+			{
+				name: 'Thomas Hood',
+				username: 'brawnybrave',
+				email: 'thomashood@email.feedback',
+				password: 'password',
+			},
+			{
+				name: 'Elijah Moss',
+				username: 'hexagon.bestagon',
+				email: 'elijahmoss@email.feedback',
+				password: 'password',
+			},
+			{
+				name: 'James Skinner',
+				username: 'hummingbird1',
+				email: 'jamesskinner@email.feedback',
+				password: 'password',
+			},
+			{
+				name: 'Anne Valentine',
+				username: 'annev1990',
+				email: 'annevalentine@email.feedback',
+				password: 'password',
+			},
+			{
+				name: 'Ryan Welles',
+				username: 'voyager.344',
+				email: 'ryanwelles@email.feedback',
+				password: 'password',
+			},
+			{
+				name: 'George Partridge',
+				username: 'soccerviewer8',
+				email: 'georgepartridge@email.feedback',
+				password: 'password',
+			},
+			{
+				name: 'Javier Pollard',
+				username: 'warlikeduke',
+				email: 'javierpollard@email.feedback',
+				password: 'password',
+			},
+			{
+				name: 'Roxanne Travis',
+				username: 'peppersprime32',
+				email: 'roxannetravis@email.feedback',
+				password: 'password',
+			},
+			{
+				name: 'Victoria Mejia',
+				username: 'arlen_the_marlin',
+				email: 'victoriamejia@email.feedback',
+				password: 'password',
+			},
+			{
+				name: 'Jackson Barker',
+				username: 'countryspirit',
+				email: 'jacksonbarker@email.feedback',
+				password: 'password',
+			},
+		],
+	});
 }
 
 // execute the main function
