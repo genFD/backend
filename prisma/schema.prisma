@@ -1,13 +1,14 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("DB_URL_DEV")
-  // url      = env("DATABASE_URL")
-}
-
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-arm64-openssl-1.1.x", "linux-musl"]
 }
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL_DEV")
+}
+
+// #### HELLO CAR
 
 model User_Cardeal {
   id       String  @id @default(uuid())
@@ -16,6 +17,8 @@ model User_Cardeal {
   admin    Boolean @default(false)
 }
 
+// #### INVOICES
+
 model User_Invoice {
   id       String  @id @default(uuid())
   email    String  @unique
@@ -23,9 +26,83 @@ model User_Invoice {
   admin    Boolean @default(false)
 }
 
+model Invoice {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  paymentDue   DateTime @default(now())
+  description  String
+  paymentTerms Int
+  client       Client   @relation(fields: [client_id], references: [id])
+  client_id    String   @unique
+  status       String
+  orders       Orders[]
+}
+
+model Item {
+  id     String   @id @default(uuid())
+  name   String
+  price  Float
+  orders Orders[]
+}
+
+model Orders {
+  id         String  @id @default(uuid())
+  quantity   Int
+  invoice    Invoice @relation(fields: [invoice_id], references: [id])
+  invoice_id String
+  item       Item    @relation(fields: [item_id], references: [id])
+  item_id    String
+}
+
+model Client {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  invoice   Invoice[]
+  addressId String?   @unique
+  Address   Address?  @relation(fields: [addressId], references: [id])
+}
+
+model Address {
+  id       String  @id @default(uuid())
+  street   String
+  city     String
+  postcode String
+  country  String
+  client   Client?
+}
+
+// #### FEEDBACKS
+
 model User_Feedback {
   id       String  @id @default(uuid())
   email    String  @unique
   password String
   admin    Boolean @default(false)
 }
+
+// CLIENT
+// id
+// name
+// email
+// address : address.id
+
+// ADDRESS
+// id
+// "street": "19 Union Terrace",
+// "city": "London",
+// "postCode": "E1 3EZ",
+// "country": "United Kingdom"
+
+// ITEM
+// id
+// "name": "Brand Guidelines",
+// "price": 1800.90,
+
+// CartItem
+// [
+// id
+// item_id : Item.id
+// quantity : 3
+// subtotal : item.price * quantity
+// ]
