@@ -9,7 +9,7 @@ datasource db {
   // url      = env("DATABASE_URL") // prod
 }
 
-//|| ############### HELLOCAR - ONLINE CAR RENTAL ############# ||
+//||############### HELLOCAR - ONLINE CAR RENTAL ############# ||
 
 model User_Cardeal {
   id        String   @id @default(uuid())
@@ -51,6 +51,11 @@ model User_Invoice {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   invoices  Invoice[]
+}
+
+model Status_Invoice {
+  id     String @id @default(uuid())
+  status String
 }
 
 model Invoice {
@@ -107,15 +112,16 @@ model User_Feedback {
   id        String     @id @default(uuid())
   image     String?
   name      String
-  username  String
+  username  String     @unique
   email     String     @unique
   password  String
   admin     Boolean    @default(false)
   Comment   Comment[]
   Feedback  Feedback[]
-  Upvote    Upvote?
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  Reply     Reply[]
+  Upvote    Upvote[]
 }
 
 model Feedback {
@@ -129,9 +135,9 @@ model Feedback {
   user        User_Feedback     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id     String
   Comment     Comment[]
-  Upvote      Upvote?
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
+  Upvote      Upvote[]
 }
 
 model Category_Feedback {
@@ -154,13 +160,26 @@ model Comment {
   feedback    Feedback      @relation(fields: [feedback_id], references: [id], onDelete: Cascade)
   feedback_id String
   created_at  DateTime      @default(now())
+  Reply       Reply[]
+}
+
+model Reply {
+  id         String        @id @default(uuid())
+  content    String
+  user       User_Feedback @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    String
+  comment    Comment       @relation(fields: [comment_id], references: [id], onDelete: Cascade)
+  comment_id String
+  created_at DateTime      @default(now())
 }
 
 model Upvote {
   id          String        @id @default(uuid())
   user        User_Feedback @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  user_id     String        @unique
   feedback    Feedback      @relation(fields: [feedback_id], references: [id], onDelete: Cascade)
-  feedback_id String        @unique
+  user_id     String
+  feedback_id String
   createdAt   DateTime      @default(now())
+
+  @@unique([user_id, feedback_id]) // user_id + feedback_id
 }

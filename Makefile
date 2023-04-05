@@ -69,6 +69,18 @@ rebuild:
 run-local:
 	docker container run -d --name backend -p 8000:8000 api
 
+
+#############################################
+# PRISMA
+seed:
+	npx prisma db seed
+
+migrate:
+	npx prisma migrate dev
+
+studio:
+	npx prisma studio
+
 #############################################
 # TERRAFORM
 
