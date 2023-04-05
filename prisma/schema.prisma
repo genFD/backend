@@ -125,31 +125,27 @@ model User_Feedback {
 }
 
 model Feedback {
-  id          String            @id @default(uuid())
+  id          String        @id @default(uuid())
   title       String
   description String
-  category    Category_Feedback @relation(fields: [category_id], references: [id])
-  category_id String
-  status      Status_Feedback   @relation(fields: [status_id], references: [id])
-  status_id   String
-  user        User_Feedback     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  category    String
+  status      String
+  user        User_Feedback @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id     String
   Comment     Comment[]
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   Upvote      Upvote[]
 }
 
 model Category_Feedback {
-  id       String     @id @default(uuid())
-  name     String
-  Feedback Feedback[]
+  id   String @id @default(uuid())
+  name String
 }
 
 model Status_Feedback {
-  id       String     @id @default(uuid())
-  name     String
-  Feedback Feedback[]
+  id   String @id @default(uuid())
+  name String
 }
 
 model Comment {
