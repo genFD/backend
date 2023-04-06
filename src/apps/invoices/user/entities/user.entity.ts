@@ -4,10 +4,28 @@ import { User_Invoice } from '@prisma/client';
 export class User implements User_Invoice {
 	@ApiProperty()
 	admin: boolean;
+
 	@ApiProperty()
 	id: string;
+
 	@ApiProperty()
 	email: string;
+
 	@ApiProperty()
 	password: string;
+
+	@ApiProperty()
+	image: string;
+
+	@ApiProperty()
+	name: string;
+
+	@ApiProperty()
+	username: string;
+
+	@ApiProperty()
+	createdAt: Date;
+
+	@ApiProperty()
+	updatedAt: Date;
 }

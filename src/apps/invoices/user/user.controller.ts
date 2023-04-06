@@ -22,8 +22,8 @@ export class UserController {
 	@ApiCreatedResponse({
 		description: 'A user has been successfully created.',
 	})
-	create(@Body() body: CreateUserDto) {
-		return this.userService.create(body.email, body.password);
+	create(@Body() user: CreateUserDto) {
+		return this.userService.create(user);
 	}
 
 	@Get()

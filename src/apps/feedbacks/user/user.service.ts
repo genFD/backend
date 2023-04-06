@@ -6,8 +6,9 @@ import { PrismaService } from '~prisma/prisma.service';
 @Injectable()
 export class UserService {
 	constructor(private readonly prisma: PrismaService) {}
-	create(email: string, password: string) {
-		return this.prisma.user_Feedback.create({ data: { email, password } });
+
+	create(user: CreateUserDto) {
+		return this.prisma.user_Feedback.create({ data: user });
 	}
 
 	findAll() {

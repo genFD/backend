@@ -7,8 +7,8 @@ import { PrismaService } from '~prisma/prisma.service';
 export class UserService {
 	constructor(private prisma: PrismaService) {}
 
-	create(email: string, password: string) {
-		return this.prisma.user_Invoice.create({ data: { email, password } });
+	create(user: CreateUserDto) {
+		return this.prisma.user_Invoice.create({ data: user });
 	}
 
 	findAll() {

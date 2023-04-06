@@ -13,7 +13,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
-@Controller('/hellocar/users')
+@Controller('hellocar/users')
 @ApiTags('Hellocar - Users')
 export class UserController {
 	constructor(private readonly userService: UserService) {}
@@ -22,8 +22,8 @@ export class UserController {
 	@ApiCreatedResponse({
 		description: 'A user has been successfully created.',
 	})
-	create(@Body() body: CreateUserDto) {
-		return this.userService.create(body.email, body.password);
+	create(@Body() user: CreateUserDto) {
+		return this.userService.create(user);
 	}
 	@Get()
 	@ApiOkResponse({ type: [User] })
