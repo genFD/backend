@@ -8,12 +8,16 @@ import {
 	Delete,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDto } from './dto/user.dto';
 import { User } from './entities/user.entity';
+import { Serialize } from '~interceptors/custom.interceptor';
 
 @Controller('fb/users')
+@Serialize(UserDto)
 @ApiTags('Feedbacks - Users')
 export class UserController {
 	constructor(private readonly userService: UserService) {}
