@@ -163,15 +163,22 @@ async function main() {
 	// });
 	// await prisma.user_Invoice.createMany({
 	// 	data: [
-	// 		{
-	// 			image:
-	// 				'https://feedback-profile-pics-001.s3.amazonaws.com/user-images/image-avatar.jpg',
-	// 			name: 'Viktor Rel',
-	// 			username: 'vikt_rel',
-	// 			email: 'viktorrel@invoice.com',
-	// 			password: 'password',
-	// 			admin: true,
-	// 		},
+	// 		// {
+	// 		// 	image:
+	// 		// 		'https://feedback-profile-pics-001.s3.amazonaws.com/user-images/image-avatar.jpg',
+	// 		// 	name: 'Viktor Rel',
+	// 		// 	username: 'vikt_rel',
+	// 		// 	email: 'viktorrel@invoice.com',
+	// 		// 	password: 'password',
+	// 		// 	admin: true,
+	// 		// },
+	// 		// {
+	// 		// 	name: 'test',
+	// 		// 	username: 'test_user',
+	// 		// 	email: 'testuser@invoice.com',
+	// 		// 	password: 'password',
+	// 		// 	admin: true,
+	// 		// },
 	// 	],
 	// });
 	// await prisma.status_Invoice.createMany({

@@ -15,7 +15,7 @@ model User_Cardeal {
   id        String   @id @default(uuid())
   email     String   @unique
   password  String
-  image     String?
+  image     String?  @default("https://feedback-profile-pics-001.s3.amazonaws.com/user-images/user_avatar.png")
   admin     Boolean  @default(false)
   reports   Report[]
   createdAt DateTime @default(now())
@@ -42,9 +42,9 @@ model Report {
 
 model User_Invoice {
   id        String    @id @default(uuid())
-  image     String?
+  image     String?   @default("https://feedback-profile-pics-001.s3.amazonaws.com/user-images/user_avatar.png")
   name      String
-  username  String
+  username  String    @unique
   email     String    @unique
   password  String
   admin     Boolean   @default(false)
@@ -58,6 +58,15 @@ model Status_Invoice {
   status String
 }
 
+model Client {
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  invoice    Invoice[]
+  address_id String?   @unique
+  address    Address?  @relation(fields: [address_id], references: [id])
+}
+
 model Invoice {
   id           String       @id @default(uuid())
   createdAt    DateTime     @default(now())
@@ -67,9 +76,11 @@ model Invoice {
   user         User_Invoice @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id      String
   client       Client       @relation(fields: [client_id], references: [id], onDelete: Cascade)
-  client_id    String       @unique
-  status       String
+  client_id    String
+  status       String       @default("pending")
   orders       Orders[]
+
+  // @@id([title(length: 100, sort: Desc), abstract(length: 10)])
 }
 
 model Item {
@@ -88,15 +99,6 @@ model Orders {
   item_id    String
 }
 
-model Client {
-  id         String    @id @default(uuid())
-  name       String
-  email      String    @unique
-  invoice    Invoice[]
-  address_id String?   @unique
-  address    Address?  @relation(fields: [address_id], references: [id])
-}
-
 model Address {
   id       String  @id @default(uuid())
   street   String
@@ -110,7 +112,7 @@ model Address {
 
 model User_Feedback {
   id        String     @id @default(uuid())
-  image     String?
+  image     String?    @default("https://feedback-profile-pics-001.s3.amazonaws.com/user-images/user_avatar.png")
   name      String
   username  String     @unique
   email     String     @unique
@@ -128,8 +130,8 @@ model Feedback {
   id          String        @id @default(uuid())
   title       String
   description String
-  category    String
-  status      String
+  category    String        @default("feature")
+  status      String        @default("suggestion")
   user        User_Feedback @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id     String
   Comment     Comment[]

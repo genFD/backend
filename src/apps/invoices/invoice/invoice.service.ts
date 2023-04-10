@@ -1,26 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { UpdateInvoiceDto } from './dto/update-invoice.dto';
+import { PrismaService } from '~prisma/prisma.service';
 
 @Injectable()
 export class InvoiceService {
-	create(createInvoiceDto: CreateInvoiceDto) {
-		return 'This action adds a new invoice';
+	constructor(private prisma: PrismaService) {}
+
+	create(invoice: CreateInvoiceDto) {
+		return this.prisma.invoice.create({ data: invoice });
 	}
 
 	findAll() {
-		return `This action returns all invoice`;
+		return this.prisma.invoice.findMany();
+	}
+	findAllByStatus(status: string) {
+		return this.prisma.invoice.findMany({
+			where: {
+				status,
+			},
+		});
+	}
+	async findOne(id: string) {
+		const invoice = await this.prisma.invoice.findUnique({
+			where: {
+				id,
+			},
+		});
+		if (!id) return null;
+		if (!invoice)
+			throw new NotFoundException(`Cannot find invoice with id ${id}`);
+		return invoice;
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} invoice`;
+	update(id: string, data: UpdateInvoiceDto) {
+		return this.prisma.invoice.update({
+			where: { id },
+			data,
+		});
 	}
 
-	update(id: number, updateInvoiceDto: UpdateInvoiceDto) {
-		return `This action updates a #${id} invoice`;
-	}
-
-	remove(id: number) {
-		return `This action removes a #${id} invoice`;
+	remove(id: string) {
+		return this.prisma.invoice.delete({
+			where: { id },
+		});
 	}
 }
