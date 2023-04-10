@@ -13,7 +13,8 @@
         "paths": {
             "~prisma/*": ["src/common/prisma/*"],
             "~swagger/*": ["src/common/configs/swagger/*"],
-            "~setup/*": ["src/common/configs/app/*"]
+            "~setup/*": ["src/common/configs/app/*"],
+            "~filters/*": ["src/common/filters/*"]
         },
         "incremental": true,
         "skipLibCheck": true,

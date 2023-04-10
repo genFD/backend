@@ -58,6 +58,15 @@ model Status_Invoice {
   status String
 }
 
+model Client {
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  invoice    Invoice[]
+  address_id String?   @unique
+  address    Address?  @relation(fields: [address_id], references: [id])
+}
+
 model Invoice {
   id           String       @id @default(uuid())
   createdAt    DateTime     @default(now())
@@ -67,9 +76,11 @@ model Invoice {
   user         User_Invoice @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id      String
   client       Client       @relation(fields: [client_id], references: [id], onDelete: Cascade)
-  client_id    String       @unique
+  client_id    String
   status       String       @default("pending")
   orders       Orders[]
+
+  // @@id([title(length: 100, sort: Desc), abstract(length: 10)])
 }
 
 model Item {
@@ -86,15 +97,6 @@ model Orders {
   invoice_id String
   item       Item    @relation(fields: [item_id], references: [id])
   item_id    String
-}
-
-model Client {
-  id         String    @id @default(uuid())
-  name       String
-  email      String    @unique
-  invoice    Invoice[]
-  address_id String?   @unique
-  address    Address?  @relation(fields: [address_id], references: [id])
 }
 
 model Address {

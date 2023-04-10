@@ -2,14 +2,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsNumber, IsString } from 'class-validator';
 
 export class CreateInvoiceDto {
-	@ApiProperty()
-	@IsDate()
-	createdAt: Date;
-
-	@ApiProperty()
-	@IsDate()
-	paymentDue: Date;
-
+	// @ApiProperty({ required: false, default: new Date() })
+	// @IsDate()
+	// createdAt: Date;
+	// @ApiPropertyOptional()
+	// title?: string;
+	// @ApiProperty({ required: false })
+	// @IsDate()
+	// paymentDue: Date;
 	@ApiProperty()
 	@IsString()
 	description: string;
@@ -18,9 +18,9 @@ export class CreateInvoiceDto {
 	@IsNumber()
 	paymentTerms: number;
 
-	@ApiProperty({ required: false, default: 'pending' })
+	@ApiProperty()
 	@IsString()
-	status?: string;
+	status: string;
 
 	@ApiProperty()
 	@IsString()

@@ -14,7 +14,13 @@ export class InvoiceService {
 	findAll() {
 		return this.prisma.invoice.findMany();
 	}
-
+	findAllByStatus(status: string) {
+		return this.prisma.invoice.findMany({
+			where: {
+				status,
+			},
+		});
+	}
 	async findOne(id: string) {
 		const invoice = await this.prisma.invoice.findUnique({
 			where: {
