@@ -12,10 +12,14 @@ import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDto } from './dto/user.dto';
+
 import { User } from './entities/user.entity';
 import { PrismaClientExceptionFilter } from '~filters/prisma-client-exception/prisma-client-exception.filter';
+import { Serialize } from '~interceptors/custom.interceptor';
 
 @Controller('invoices/users')
+@Serialize(UserDto)
 @UseFilters(PrismaClientExceptionFilter)
 @ApiTags('Invoices - Users')
 export class UserController {

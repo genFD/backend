@@ -14,7 +14,8 @@
             "~prisma/*": ["src/common/prisma/*"],
             "~swagger/*": ["src/common/configs/swagger/*"],
             "~setup/*": ["src/common/configs/app/*"],
-            "~filters/*": ["src/common/filters/*"]
+            "~filters/*": ["src/common/filters/*"],
+            "~interceptors/*": ["src/common/interceptors/*"]
         },
         "incremental": true,
         "skipLibCheck": true,

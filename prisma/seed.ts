@@ -163,22 +163,22 @@ async function main() {
 	// });
 	// await prisma.user_Invoice.createMany({
 	// 	data: [
-	// 		// {
-	// 		// 	image:
-	// 		// 		'https://feedback-profile-pics-001.s3.amazonaws.com/user-images/image-avatar.jpg',
-	// 		// 	name: 'Viktor Rel',
-	// 		// 	username: 'vikt_rel',
-	// 		// 	email: 'viktorrel@invoice.com',
-	// 		// 	password: 'password',
-	// 		// 	admin: true,
-	// 		// },
-	// 		// {
-	// 		// 	name: 'test',
-	// 		// 	username: 'test_user',
-	// 		// 	email: 'testuser@invoice.com',
-	// 		// 	password: 'password',
-	// 		// 	admin: true,
-	// 		// },
+	// 		{
+	// 			image:
+	// 				'https://feedback-profile-pics-001.s3.amazonaws.com/user-images/image-avatar.jpg',
+	// 			name: 'Viktor Rel',
+	// 			username: 'vikt_rel',
+	// 			email: 'viktorrel@invoice.com',
+	// 			password: 'password',
+	// 			admin: true,
+	// 		},
+	// 		{
+	// 			name: 'test',
+	// 			username: 'test_user',
+	// 			email: 'testuser@invoice.com',
+	// 			password: 'password',
+	// 			admin: true,
+	// 		},
 	// 	],
 	// });
 	// await prisma.status_Invoice.createMany({
@@ -310,20 +310,7 @@ async function main() {
 	// 		},
 	// 	],
 	// });
-	// ############## HELLO CAR ###########//
-	// await prisma.user_Cardeal.createMany({
-	// 	data: [
-	// 		{ email: 'saliba@email.cardeal', password: 'password' },
-	// 		{ email: 'gabriel@email.cardeal', password: 'password' },
-	// 	],
-	// });
-	// await prisma.user_Invoice.createMany({
-	// 	data: [
-	// 		{ email: 'saliba@email.invoice', password: 'password' },
-	// 		{ email: 'gabriel@email.invoice', password: 'password' },
-	// 	],
-	// });
-	// Feedback
+	//################### Feedback ################ //
 	// await prisma.user_Feedback.createMany({
 	// 	data: [
 	// 		{
