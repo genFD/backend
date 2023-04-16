@@ -15,7 +15,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 
 import { User } from './entities/user.entity';
-import { PrismaClientExceptionFilter } from '~filters/prisma-client-exception/prisma-client-exception.filter';
+import { PrismaClientExceptionFilter } from '~exceptions/prisma-client-exception.filter';
 import { Serialize } from '~interceptors/custom.interceptor';
 
 @Controller('invoices/users')

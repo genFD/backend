@@ -3,32 +3,6 @@ const prisma = new PrismaClient();
 
 async function main() {
 	// ######## INVOICES ######### //
-	// const result = await prisma.$queryRaw`
-	// SELECT name, email, street, city, postcode
-	// FROM public."Address"
-	// JOIN public."Client"
-	// on public."Client"."addressId" = public."Address".id
-	// `;
-	// const result = await prisma.$queryRaw`
-	// SELECT invoice_id, name, quantity, price, (quantity * price) AS subtotal
-	// FROM public."Invoice"
-	// JOIN public."Orders" ON public."Orders".invoice_id = public."Invoice".id
-	// JOIN public."Item" ON public."Item".id = public."Orders".item_id
-	// `;
-	// console.log(result);
-	// 	const invoice1 = 'a302b211-ef04-4491-b780-f12a9ac8e616';
-	// 	const result = await prisma.$queryRaw`
-	// 	SELECT SUM(subtotal) as grand_total
-	// 	FROM (
-	// 	SELECT subtotal FROM (
-	// 	SELECT invoice_id, name, quantity, price, (quantity * price) AS subtotal
-	// 	FROM public."Invoice"
-	// 	JOIN public."Orders" ON public."Orders".invoice_id = public."Invoice".id
-	// 	JOIN public."Item" ON public."Item".id = public."Orders".item_id) AS CART
-	// 	WHERE invoice_id = ${invoice1}
-	// ) AS total
-	// 	`;
-	// console.log(result);
 	// await prisma.item.createMany({
 	// 	data: [
 	// 		{
@@ -111,56 +85,6 @@ async function main() {
 	// 		},
 	// 	],
 	// });
-	// await prisma.client.upsert({
-	// 	where: { email: 'ktor@gmail.com' },
-	// 	update: {
-	// 		addressId: 'd19aecb7-e7af-4fa2-8e41-dcfed837dc5e',
-	// 	},
-	// 	create: {
-	// 		name: 'ktor',
-	// 		email: 'ktor@gmail.com',
-	// 		addressId: '0ce8591a-2cf1-43b3-860a-c4113b65ceb9',
-	// 	},
-	// });
-	// await prisma.client.createMany({
-	// 	data: [
-	// 		{
-	// 			name: 'Jensen Huang',
-	// 			email: 'jensen@gmail.com',
-	// 			address_id: 'c78d4bbf-9e4f-474e-a04f-86d1f182aeef',
-	// 		},
-	// 		{
-	// 			name: 'Alex Grim',
-	// 			email: 'alexgrim@mail.com',
-	// 			address_id: '4c5f4939-c746-4c2c-ad55-424d5114b924',
-	// 		},
-	// 		{
-	// 			name: 'John Morrison',
-	// 			email: 'jm@myco.com',
-	// 			address_id: 'f7b95366-7ed2-45f7-81b8-0dfbe176c5c0',
-	// 		},
-	// 		{
-	// 			name: 'Alysa Werner',
-	// 			email: 'alysa@email.co.uk',
-	// 			address_id: 'dbe87f4c-467f-4289-ba3b-e9009571f75b',
-	// 		},
-	// 		{
-	// 			name: 'Mellisa Clarke',
-	// 			email: 'mellisa.clarke@example.com',
-	// 			address_id: 'eca08986-2b00-4e64-9bb7-0d07cc3bbf59',
-	// 		},
-	// 		{
-	// 			name: 'Thomas Wayne',
-	// 			email: 'thomas@dc.com',
-	// 			address_id: 'c541873a-1150-435d-8609-0323ddb67a65',
-	// 		},
-	// 		{
-	// 			name: 'Anita Wainwright',
-	// 			email: 'anitawainwright@biz.com',
-	// 			address_id: '8bc5e3b5-82aa-4a59-b1c1-95ac8e2782cb',
-	// 		},
-	// 	],
-	// });
 	// await prisma.user_Invoice.createMany({
 	// 	data: [
 	// 		{
@@ -169,13 +93,6 @@ async function main() {
 	// 			name: 'Viktor Rel',
 	// 			username: 'vikt_rel',
 	// 			email: 'viktorrel@invoice.com',
-	// 			password: 'password',
-	// 			admin: true,
-	// 		},
-	// 		{
-	// 			name: 'test',
-	// 			username: 'test_user',
-	// 			email: 'testuser@invoice.com',
 	// 			password: 'password',
 	// 			admin: true,
 	// 		},
@@ -194,6 +111,46 @@ async function main() {
 	// 		},
 	// 	],
 	// });
+	// #### Manual IDS #####
+	// await prisma.client.createMany({
+	// 	data: [
+	// 		{
+	// 			name: 'Jensen Huang',
+	// 			email: 'jensen@gmail.com',
+	// 			address_id: '1bfccfc1-d202-441c-b022-ef5a3a359ff5',
+	// 		},
+	// 		{
+	// 			name: 'Alex Grim',
+	// 			email: 'alexgrim@mail.com',
+	// 			address_id: '7b761bc4-f48e-40d1-ae29-4b1a712b9d23',
+	// 		},
+	// 		{
+	// 			name: 'John Morrison',
+	// 			email: 'jm@myco.com',
+	// 			address_id: 'b2589c20-088b-479c-ac8d-7cd285394387',
+	// 		},
+	// 		{
+	// 			name: 'Alysa Werner',
+	// 			email: 'alysa@email.co.uk',
+	// 			address_id: 'b5787c5f-981e-4e73-a49a-f592504aee8f',
+	// 		},
+	// 		{
+	// 			name: 'Mellisa Clarke',
+	// 			email: 'mellisa.clarke@example.com',
+	// 			address_id: 'd22a79d3-f88c-4747-a01d-29a76bafdef9',
+	// 		},
+	// 		{
+	// 			name: 'Thomas Wayne',
+	// 			email: 'thomas@dc.com',
+	// 			address_id: 'd9281bb8-9098-497f-8cdf-554bdee129f0',
+	// 		},
+	// 		{
+	// 			name: 'Anita Wainwright',
+	// 			email: 'anitawainwright@biz.com',
+	// 			address_id: 'e43e15cc-1d30-401d-9d5c-4379b0d38096',
+	// 		},
+	// 	],
+	// });
 	// await prisma.invoice.createMany({
 	// 	data: [
 	// 		{
@@ -202,8 +159,8 @@ async function main() {
 	// 			description: 'Re-branding',
 	// 			paymentTerms: 1,
 	// 			status: 'paid',
-	// 			client_id: '374f25d8-d2b0-4d68-87ed-450b65df4793',
-	// 			user_id: '54789bb4-0ddd-4120-b933-a0fba81be5ca',
+	// 			client_id: '29bd3751-c658-4e3f-aaba-24c4eab9fa4d',
+	// 			user_id: '30d4bd58-f87f-4d39-8faf-ba9b4a47bc32',
 	// 		},
 	// 		{
 	// 			createdAt: new Date(2021, 8, 21),
@@ -211,8 +168,8 @@ async function main() {
 	// 			description: 'Graphic Design',
 	// 			paymentTerms: 30,
 	// 			status: 'pending',
-	// 			client_id: '55d99585-3075-43a0-b6a8-4f8e8400521f',
-	// 			user_id: '54789bb4-0ddd-4120-b933-a0fba81be5ca',
+	// 			client_id: '67e42940-2478-420d-ba35-ba1173df0262',
+	// 			user_id: '30d4bd58-f87f-4d39-8faf-ba9b4a47bc32',
 	// 		},
 	// 		{
 	// 			createdAt: new Date(2021, 9, 24),
@@ -220,8 +177,8 @@ async function main() {
 	// 			description: 'Website Redesign',
 	// 			paymentTerms: 7,
 	// 			status: 'paid',
-	// 			client_id: 'fb4bc534-62a4-4d6e-a10b-170a6476d8c5',
-	// 			user_id: '54789bb4-0ddd-4120-b933-a0fba81be5ca',
+	// 			client_id: '6e11b9d7-8226-44b7-b65e-3d928e37aedb',
+	// 			user_id: '30d4bd58-f87f-4d39-8faf-ba9b4a47bc32',
 	// 		},
 	// 		{
 	// 			createdAt: new Date(2021, 10, 11),
@@ -229,8 +186,8 @@ async function main() {
 	// 			description: 'Logo Concept',
 	// 			paymentTerms: 1,
 	// 			status: 'pending',
-	// 			client_id: '5c8ef818-f64a-4cd6-b088-eadfd99d907a',
-	// 			user_id: '54789bb4-0ddd-4120-b933-a0fba81be5ca',
+	// 			client_id: 'c7b7cc5a-7b26-4bc4-a0fb-a352def9e654',
+	// 			user_id: '30d4bd58-f87f-4d39-8faf-ba9b4a47bc32',
 	// 		},
 	// 		{
 	// 			createdAt: new Date(2021, 10, 7),
@@ -238,8 +195,8 @@ async function main() {
 	// 			description: 'Re-branding',
 	// 			paymentTerms: 7,
 	// 			status: 'pending',
-	// 			client_id: 'eb605dd1-80d2-4a9f-8939-4a349d88b67c',
-	// 			user_id: '54789bb4-0ddd-4120-b933-a0fba81be5ca',
+	// 			client_id: 'e132c931-d360-4479-95a2-c2b03f92c11c',
+	// 			user_id: '30d4bd58-f87f-4d39-8faf-ba9b4a47bc32',
 	// 		},
 	// 		{
 	// 			createdAt: new Date(2021, 10, 1),
@@ -247,8 +204,8 @@ async function main() {
 	// 			description: 'Landing Page Design',
 	// 			paymentTerms: 30,
 	// 			status: 'pending',
-	// 			client_id: '8697f9b7-2477-4101-9d9c-a2953c4eeedc',
-	// 			user_id: '54789bb4-0ddd-4120-b933-a0fba81be5ca',
+	// 			client_id: 'edc8117a-c63c-4dc1-91a0-52b92bd2e735',
+	// 			user_id: '30d4bd58-f87f-4d39-8faf-ba9b4a47bc32',
 	// 		},
 	// 		{
 	// 			createdAt: new Date(2021, 11, 5),
@@ -256,8 +213,8 @@ async function main() {
 	// 			description: 'Logo Re-design',
 	// 			paymentTerms: 30,
 	// 			status: 'draft',
-	// 			client_id: 'f1e58557-80d6-423b-a8b4-e14a6ba80d11',
-	// 			user_id: '54789bb4-0ddd-4120-b933-a0fba81be5ca',
+	// 			client_id: 'f87fe147-5ff6-462b-bbda-5c21fed99749',
+	// 			user_id: '30d4bd58-f87f-4d39-8faf-ba9b4a47bc32',
 	// 		},
 	// 	],
 	// });
@@ -265,48 +222,53 @@ async function main() {
 	// 	data: [
 	// 		{
 	// 			quantity: 1,
-	// 			item_id: 'cd8632d7-dd61-4506-9033-7bd421c149a1',
-	// 			invoice_id: 'acc448f1-d8e9-40af-a781-04f03dfa011e',
+	// 			item_id: '218f7c33-8eab-414f-b977-164d8bf1da42',
+	// 			invoice_id: '0cbc9e06-09da-4c4d-94f0-7e26a9c3aec1',
 	// 		},
 	// 		{
 	// 			quantity: 1,
-	// 			item_id: 'cbaed1f4-156e-4612-ab8f-e5cbdce2a9a7',
-	// 			invoice_id: '044f5757-4e1d-471e-88b5-a218f1e614b6',
+	// 			item_id: '84030c2a-8062-44db-8b91-f21db16362e4',
+	// 			invoice_id: '0cbc9e06-09da-4c4d-94f0-7e26a9c3aec1',
 	// 		},
 	// 		{
 	// 			quantity: 2,
-	// 			item_id: '40843a08-30eb-468b-b2d8-a986ab1cda9b',
-	// 			invoice_id: '044f5757-4e1d-471e-88b5-a218f1e614b6',
+	// 			item_id: '37ae74b4-2547-4aad-82f6-878395aa1bd3',
+	// 			invoice_id: '231dedc5-6aee-4d3e-8b94-6d517f6b01b9',
 	// 		},
 	// 		{
 	// 			quantity: 1,
-	// 			item_id: '357402dd-00cc-4e38-bc5b-df539a38ee3f',
-	// 			invoice_id: '901e2a1b-6c34-421c-a271-72e1bdbf31b5',
+	// 			item_id: 'c571caae-d36f-4190-9258-6708a26b1aec',
+	// 			invoice_id: '231dedc5-6aee-4d3e-8b94-6d517f6b01b9',
 	// 		},
 	// 		{
 	// 			quantity: 1,
-	// 			item_id: 'b58b1963-db22-4471-b360-48bc80e4bdd0',
-	// 			invoice_id: '8edc6cff-4b47-4fec-9cb2-c39aa027f42c',
+	// 			item_id: '218f7c33-8eab-414f-b977-164d8bf1da42',
+	// 			invoice_id: '5373bdb8-41c2-4305-b6d4-7259b4475db4',
 	// 		},
 	// 		{
 	// 			quantity: 1,
-	// 			item_id: '1358ede1-0c81-4ac9-afa1-b57fed5f1b1f',
-	// 			invoice_id: '61b2985c-6e69-4af2-916f-570d99fbb988',
+	// 			item_id: '218f7c33-8eab-414f-b977-164d8bf1da42',
+	// 			invoice_id: 'a991504f-9095-4ea9-8c07-0d0d863bf8d3',
 	// 		},
 	// 		{
 	// 			quantity: 1,
-	// 			item_id: 'cd8632d7-dd61-4506-9033-7bd421c149a1',
-	// 			invoice_id: '61b2985c-6e69-4af2-916f-570d99fbb988',
+	// 			item_id: '37ae74b4-2547-4aad-82f6-878395aa1bd3',
+	// 			invoice_id: 'ad0bbdcd-524f-4919-aa06-1de2a996158c',
 	// 		},
 	// 		{
 	// 			quantity: 1,
-	// 			item_id: '84659d3f-6250-493b-bbd8-f01a671cdc84',
-	// 			invoice_id: '9c1cc5fe-3941-405f-aaf2-f9961e55c235',
+	// 			item_id: 'c571caae-d36f-4190-9258-6708a26b1aec',
+	// 			invoice_id: 'ad0bbdcd-524f-4919-aa06-1de2a996158c',
 	// 		},
 	// 		{
 	// 			quantity: 1,
-	// 			item_id: '5d5b0188-ae22-4005-a336-e835387eaddf',
-	// 			invoice_id: '9328c506-ce3d-4862-9dfa-61145c9322e4',
+	// 			item_id: 'aa3b64b2-584b-4e1f-825b-5eb884feace3',
+	// 			invoice_id: 'd8a0a304-3c5d-4fdf-bba0-f8a620a3056c',
+	// 		},
+	// 		{
+	// 			quantity: 1,
+	// 			item_id: 'c571caae-d36f-4190-9258-6708a26b1aec',
+	// 			invoice_id: 'edb438a8-1acb-4a13-8306-e69a377f1404',
 	// 		},
 	// 	],
 	// });
@@ -412,6 +374,36 @@ async function main() {
 	// 		},
 	// 	],
 	// });
+	// await prisma.status_Feedback.createMany({
+	// 	data: [
+	// 		{
+	// 			name: 'suggestion',
+	// 		},
+	// 		{
+	// 			name: 'planned',
+	// 		},
+	// 		{
+	// 			name: 'in-progress',
+	// 		},
+	// 		{
+	// 			name: 'live',
+	// 		},
+	// 	],
+	// });
+	// await prisma.category_Feedback.createMany({
+	// 	data: [
+	// 		{
+	// 			name: 'enhancement',
+	// 		},
+	// 		{
+	// 			name: 'feature',
+	// 		},
+	// 		{
+	// 			name: 'bug',
+	// 		},
+	// 	],
+	// });
+	// ## Manual IDS ##
 	// await prisma.feedback.createMany({
 	// 	data: [
 	// 		{
@@ -420,7 +412,7 @@ async function main() {
 	// 				'Easier to search for solutions based on a specific stack.',
 	// 			category: 'enhancement',
 	// 			status: 'suggestion',
-	// 			user_id: 'aa5eaa74-c809-4c93-9e44-f680cbea10f2',
+	// 			user_id: '1ca175d4-43e3-4e2b-9ba3-fd6a3c087920',
 	// 		},
 	// 		{
 	// 			title: 'Add a dark theme option',
@@ -428,14 +420,14 @@ async function main() {
 	// 				'It would help people with light sensitivities and who prefer dark mode.',
 	// 			category: 'feature',
 	// 			status: 'suggestion',
-	// 			user_id: '3f8cc895-6a9d-4c00-9e2f-8b3c3460d799',
+	// 			user_id: '3ada2541-33e6-4be7-afa7-cea152096e82',
 	// 		},
 	// 		{
 	// 			title: 'Q&A within the challenge hubs',
 	// 			description: 'Challenge-specific Q&A would make for easy reference.',
 	// 			category: 'feature',
 	// 			status: 'suggestion',
-	// 			user_id: '2d4cb158-a3a1-4fe8-b2c4-db6293195acf',
+	// 			user_id: '27f3b1b5-f08a-4385-b1af-719eae1b3c72',
 	// 		},
 	// 		{
 	// 			title: 'Add image/video upload to feedback',
@@ -443,7 +435,7 @@ async function main() {
 	// 				'Images and screencasts can enhance comments on solutions.',
 	// 			category: 'enhancement',
 	// 			status: 'suggestion',
-	// 			user_id: '31f30926-ead8-4332-9942-5f1e3cb24f60',
+	// 			user_id: '2adb0454-027f-43fe-a69f-8b25e79c0591',
 	// 		},
 	// 		{
 	// 			title: 'Ability to follow others',
@@ -451,7 +443,7 @@ async function main() {
 	// 				'Stay updated on comments and solutions other people post.',
 	// 			category: 'feature',
 	// 			status: 'suggestion',
-	// 			user_id: '3f8cc895-6a9d-4c00-9e2f-8b3c3460d799',
+	// 			user_id: '3d1996de-617d-410b-b1ef-7ac744479b27',
 	// 		},
 	// 		{
 	// 			title: 'Preview images not loading',
@@ -459,7 +451,7 @@ async function main() {
 	// 				'Challenge preview images are missing when you apply a filter.',
 	// 			category: 'bug',
 	// 			status: 'suggestion',
-	// 			user_id: '921aaad7-9bfc-4055-8057-dcea58d495cd',
+	// 			user_id: '3da6330f-b87a-448e-afbc-0a1ff9925078',
 	// 		},
 	// 		{
 	// 			title: 'More comprehensive reports',
@@ -467,7 +459,7 @@ async function main() {
 	// 				'It would be great to see a more detailed breakdown of solutions',
 	// 			category: 'feature',
 	// 			status: 'planned',
-	// 			user_id: 'ebc2bb4d-cb71-4769-989f-4f8c326e29f5',
+	// 			user_id: '9d735070-3fbf-4d41-81bf-c357d2ee14f4',
 	// 		},
 	// 		{
 	// 			title: 'Learning paths',
@@ -475,7 +467,7 @@ async function main() {
 	// 				'Sequenced projects for different goals to help people improve.',
 	// 			category: 'feature',
 	// 			status: 'planned',
-	// 			user_id: 'ebc2bb4d-cb71-4769-989f-4f8c326e29f5',
+	// 			user_id: '7293004c-13c7-44ce-815a-eeabe1a03cd9',
 	// 		},
 	// 		{
 	// 			title: 'One-click portfolio generation',
@@ -483,14 +475,14 @@ async function main() {
 	// 				'Add ability to create professional looking portfolio from profile.',
 	// 			category: 'feature',
 	// 			status: 'in-progress',
-	// 			user_id: 'fd6d3a9b-d502-4a15-983f-dcaf6fbad2d2',
+	// 			user_id: 'aaad0184-eb99-4ead-b86d-27b8d26a76dc',
 	// 		},
 	// 		{
 	// 			title: 'Bookmark challenges',
 	// 			description: 'Be able to bookmark challenges to take later on.',
 	// 			category: 'feature',
 	// 			status: 'in-progress',
-	// 			user_id: '512651d0-4f62-460d-b707-2aa86b6ba824',
+	// 			user_id: 'b71b54f1-d6fe-4d80-abab-bb84b70c423e',
 	// 		},
 	// 		{
 	// 			title: 'Animated solution screenshots',
@@ -498,14 +490,14 @@ async function main() {
 	// 				'Screenshots of solutions with animations don’t display correctly.',
 	// 			category: 'bug',
 	// 			status: 'in-progress',
-	// 			user_id: '8d2554f5-1746-4dbe-8f2d-d4d431a280c9',
+	// 			user_id: 'e93841b7-23c3-49bd-9670-58cc82390e67',
 	// 		},
 	// 		{
 	// 			title: 'Add micro-interactions',
 	// 			description: 'Small animations at specific points can add delight.',
 	// 			category: 'enhancement',
 	// 			status: 'live',
-	// 			user_id: '6d89ea91-d64d-4070-9a5c-b4be8cc1575a',
+	// 			user_id: 'edc91e9e-f984-44bc-8a99-d8f4a5a1cb42',
 	// 		},
 	// 	],
 	// });
@@ -628,35 +620,6 @@ async function main() {
 	// 				"Me too! I'd also love to see celebrations at specific points as well. It would help people take a moment to celebrate their achievements!",
 	// 			user_id: 'ebc2bb4d-cb71-4769-989f-4f8c326e29f5',
 	// 			comment_id: '7c06ac4b-5d46-4131-b897-169292ef5c15',
-	// 		},
-	// 	],
-	// });
-	// await prisma.category_Feedback.createMany({
-	// 	data: [
-	// 		{
-	// 			name: 'enhancement',
-	// 		},
-	// 		{
-	// 			name: 'feature',
-	// 		},
-	// 		{
-	// 			name: 'bug',
-	// 		},
-	// 	],
-	// });
-	// await prisma.status_Feedback.createMany({
-	// 	data: [
-	// 		{
-	// 			name: 'suggestion',
-	// 		},
-	// 		{
-	// 			name: 'planned',
-	// 		},
-	// 		{
-	// 			name: 'in-progress',
-	// 		},
-	// 		{
-	// 			name: 'live',
 	// 		},
 	// 	],
 	// });
@@ -880,12 +843,6 @@ async function main() {
 	// 		},
 	// 	],
 	// });
-	// number of upvotes per feedback
-	// SELECT title, count(*)
-	// FROM "Feedback"
-	// JOIN "Upvote"
-	// ON "Upvote".feedback_id = "Feedback".id
-	// GROUP BY "Feedback".title
 }
 
 // execute the main function

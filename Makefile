@@ -69,6 +69,9 @@ rebuild:
 run-local:
 	docker container run -d --name backend -p 8000:8000 api
 
+redis:
+	docker compose up redis -d
+
 
 #############################################
 # PRISMA
