@@ -37,14 +37,14 @@ export class UserService {
   }
 
   update(id: string, data: UpdateUserDto) {
-    return this.prisma.user_Invoice.update({
+    return this.prisma.user.update({
       where: { id },
       data,
     });
   }
 
   remove(id: string) {
-    return this.prisma.user_Invoice.delete({
+    return this.prisma.user.delete({
       where: { id },
     });
   }

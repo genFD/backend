@@ -9,30 +9,71 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  image     String?  @default("https://feedback-profile-pics-001.s3.amazonaws.com/user-images/user_avatar.png")
+  id        String     @id @default(uuid())
+  image     String?    @default("https://feedback-profile-pics-001.s3.amazonaws.com/user-images/user_avatar.png")
   name      String
-  username  String   @unique
-  email     String   @unique
+  username  String     @unique
+  email     String     @unique
   password  String
-  admin     Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model User_Cardeal {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  admin     Boolean  @default(false)
-  createdAt DateTime @default(now())
-  image     String?  @default("https://feedback-profile-pics-001.s3.amazonaws.com/user-images/user_avatar.png")
-  updatedAt DateTime @updatedAt
+  admin     Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  feedbacks Feedback[]
+  comments  Comment[]
+  replies   Reply[]
+  upvotes   Upvote[]
+  invoices  Invoice[]
   reports   Report[]
 }
 
+model Feedback {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  user_id     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  category    String    @default("feature")
+  status      String    @default("suggestion")
+  comments    Comment[]
+  user        User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  upvotes     Upvote[]
+}
+
+model Comment {
+  id          String   @id @default(uuid())
+  content     String
+  user_id     String
+  feedback_id String
+  created_at  DateTime @default(now())
+  feedback    Feedback @relation(fields: [feedback_id], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  reply       Reply[]
+}
+
+model Reply {
+  id         String   @id @default(uuid())
+  content    String
+  comment_id String
+  created_at DateTime @default(now())
+  user_id    String
+  comment    Comment  @relation(fields: [comment_id], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Upvote {
+  id          String   @id @default(uuid())
+  user_id     String
+  feedback_id String
+  createdAt   DateTime @default(now())
+  feedback    Feedback @relation(fields: [feedback_id], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, feedback_id])
+}
+
 model Report {
-  id           String        @id @default(uuid())
+  id           String   @id @default(uuid())
   price        Int
   make         String
   model        String
@@ -41,24 +82,35 @@ model Report {
   fuel_type    String
   year         Int
   mileage      Int
-  approved     Boolean       @default(false)
-  authorId     String?
-  createdAt    DateTime      @default(now())
-  author       User_Cardeal? @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  approved     Boolean  @default(false)
+  user_id      String
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
-model User_Invoice {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  password  String
-  admin     Boolean   @default(false)
-  createdAt DateTime  @default(now())
-  image     String?   @default("https://feedback-profile-pics-001.s3.amazonaws.com/user-images/user_avatar.png")
-  name      String
-  updatedAt DateTime  @updatedAt
-  username  String    @unique
-  invoices  Invoice[]
-}
+// model User_Cardeal {
+//   id        String   @id @default(uuid())
+//   email     String   @unique
+//   password  String
+//   admin     Boolean  @default(false)
+//   createdAt DateTime @default(now())
+//   image     String?  @default("https://feedback-profile-pics-001.s3.amazonaws.com/user-images/user_avatar.png")
+//   updatedAt DateTime @updatedAt
+//   reports   Report[]
+// }
+
+// model User_Invoice {
+//   id        String    @id @default(uuid())
+//   email     String    @unique
+//   password  String
+//   admin     Boolean   @default(false)
+//   createdAt DateTime  @default(now())
+//   image     String?   @default("https://feedback-profile-pics-001.s3.amazonaws.com/user-images/user_avatar.png")
+//   name      String
+//   updatedAt DateTime  @updatedAt
+//   username  String    @unique
+//   invoices  Invoice[]
+// }
 
 model Status_Invoice {
   id     String @id @default(uuid())
@@ -75,16 +127,16 @@ model Client {
 }
 
 model Invoice {
-  id           String       @id @default(uuid())
-  createdAt    DateTime     @default(now())
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
   description  String
-  paymentDue   DateTime     @default(now())
+  paymentDue   DateTime @default(now())
   paymentTerms Int
-  status       String       @default("pending")
+  status       String   @default("pending")
   client_id    String
   user_id      String
-  client       Client       @relation(fields: [client_id], references: [id], onDelete: Cascade)
-  user         User_Invoice @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  client       Client   @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   orders       Orders[]
 }
 
@@ -113,35 +165,21 @@ model Address {
   client   Client?
 }
 
-model User_Feedback {
-  id        String     @id @default(uuid())
-  email     String     @unique
-  password  String
-  admin     Boolean    @default(false)
-  createdAt DateTime   @default(now())
-  image     String?    @default("https://feedback-profile-pics-001.s3.amazonaws.com/user-images/user_avatar.png")
-  name      String
-  updatedAt DateTime   @updatedAt
-  username  String     @unique
-  Comment   Comment[]
-  Feedback  Feedback[]
-  Reply     Reply[]
-  Upvote    Upvote[]
-}
-
-model Feedback {
-  id          String        @id @default(uuid())
-  title       String
-  description String
-  user_id     String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  category    String        @default("feature")
-  status      String        @default("suggestion")
-  Comment     Comment[]
-  user        User_Feedback @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  Upvote      Upvote[]
-}
+// model User_Feedback {
+//   id        String    @id @default(uuid())
+//   email     String    @unique
+//   password  String
+//   admin     Boolean   @default(false)
+//   createdAt DateTime  @default(now())
+//   image     String?   @default("https://feedback-profile-pics-001.s3.amazonaws.com/user-images/user_avatar.png")
+//   name      String
+//   updatedAt DateTime  @updatedAt
+//   username  String    @unique
+//   Comment   Comment[]
+//   // Feedback  Feedback[]
+//   Reply     Reply[]
+//   Upvote    Upvote[]
+// }
 
 model Category_Feedback {
   id   String @id @default(uuid())
@@ -151,38 +189,6 @@ model Category_Feedback {
 model Status_Feedback {
   id   String @id @default(uuid())
   name String
-}
-
-model Comment {
-  id          String        @id @default(uuid())
-  content     String
-  user_id     String
-  feedback_id String
-  created_at  DateTime      @default(now())
-  feedback    Feedback      @relation(fields: [feedback_id], references: [id], onDelete: Cascade)
-  user        User_Feedback @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  Reply       Reply[]
-}
-
-model Reply {
-  id         String        @id @default(uuid())
-  content    String
-  comment_id String
-  created_at DateTime      @default(now())
-  user_id    String
-  comment    Comment       @relation(fields: [comment_id], references: [id], onDelete: Cascade)
-  user       User_Feedback @relation(fields: [user_id], references: [id], onDelete: Cascade)
-}
-
-model Upvote {
-  id          String        @id @default(uuid())
-  user_id     String
-  feedback_id String
-  createdAt   DateTime      @default(now())
-  feedback    Feedback      @relation(fields: [feedback_id], references: [id], onDelete: Cascade)
-  user        User_Feedback @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  @@unique([user_id, feedback_id])
 }
 
 model Session {
