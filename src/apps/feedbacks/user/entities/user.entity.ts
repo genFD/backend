@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { User_Feedback } from '@prisma/client';
+// import { User_Feedback } from '@prisma/client';
+import { User } from '~user/entities/user.entity';
 // import { BaseUser } from '../../../../common/entities/base.user.entity';
 
 // export class User implements User_Feedback {
@@ -30,4 +31,4 @@ import { User_Feedback } from '@prisma/client';
 // 	@ApiProperty()
 // 	updatedAt: Date;
 // }
-// export class User extends BaseUser {}
+// export class User_Feedback extends User {}
