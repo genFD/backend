@@ -3,9 +3,6 @@ import { User_Invoice } from '@prisma/client';
 
 export class User implements User_Invoice {
 	@ApiProperty()
-	admin: boolean;
-
-	@ApiProperty()
 	id: string;
 
 	@ApiProperty()
@@ -22,6 +19,9 @@ export class User implements User_Invoice {
 
 	@ApiProperty()
 	username: string;
+
+	@ApiProperty()
+	admin: boolean;
 
 	@ApiProperty()
 	createdAt: Date;

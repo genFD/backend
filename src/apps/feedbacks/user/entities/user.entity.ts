@@ -1,31 +1,33 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { User_Feedback } from '@prisma/client';
+// import { BaseUser } from '../../../../common/entities/base.user.entity';
 
-export class User implements User_Feedback {
-	@ApiProperty()
-	id: string;
+// export class User implements User_Feedback {
+// 	@ApiProperty()
+// 	id: string;
 
-	@ApiProperty()
-	image: string;
+// 	@ApiProperty()
+// 	image: string;
 
-	@ApiProperty()
-	name: string;
+// 	@ApiProperty()
+// 	name: string;
 
-	@ApiProperty()
-	username: string;
+// 	@ApiProperty()
+// 	username: string;
 
-	@ApiProperty()
-	email: string;
+// 	@ApiProperty()
+// 	email: string;
 
-	@ApiProperty()
-	password: string;
+// 	@ApiProperty()
+// 	password: string;
 
-	@ApiProperty()
-	admin: boolean;
+// 	@ApiProperty()
+// 	admin: boolean;
 
-	@ApiProperty()
-	createdAt: Date;
+// 	@ApiProperty()
+// 	createdAt: Date;
 
-	@ApiProperty()
-	updatedAt: Date;
-}
+// 	@ApiProperty()
+// 	updatedAt: Date;
+// }
+// export class User extends BaseUser {}
