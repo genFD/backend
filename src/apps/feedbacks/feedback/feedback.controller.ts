@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { FeedbackService } from './feedback.service';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
@@ -14,8 +14,9 @@ export class FeedbackController {
   @Post()
   @UseGuards(LoggedInGuard)
   @ApiCreatedResponse({ description: 'A new feedback has been successfully submitted.' })
-  create(@Body() feedback: CreateFeedbackDto) {
-    return this.feedbackService.create(feedback);
+  create(@Body() feedback: CreateFeedbackDto, @Req() req: any) {
+    const { id } = req.user;
+    return this.feedbackService.create(feedback, id);
   }
 
   @Get()

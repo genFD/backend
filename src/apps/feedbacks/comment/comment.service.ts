@@ -7,8 +7,14 @@ import { PrismaService } from '~modules/prisma/prisma.service';
 export class CommentService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(comment: CreateCommentDto) {
-    return this.prisma.comment.create({ data: comment });
+  create(comment: CreateCommentDto, user_id: string, feedback_id: string) {
+    return this.prisma.comment.create({
+      data: {
+        ...comment,
+        user_id,
+        feedback_id,
+      },
+    });
   }
 
   findAll() {
