@@ -28,6 +28,7 @@ export class AuthController {
   @Post('register')
   register(@Body() user: SignUpDto) {
     return this.authService.registerUser(user);
+    //TODO: redirect to login page
   }
 
   /*Logout*/
